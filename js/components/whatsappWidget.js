@@ -1,7 +1,7 @@
 export default function whatsappWidget() {
     return {
         isOpen: false,
-        
+
         // Aquí defines a tus asesores. 
         // Puedes cambiar los números (phone) por los reales (formato internacional sin +).
         agents: [
@@ -10,7 +10,7 @@ export default function whatsappWidget() {
                 area: 'Créditos y Préstamos',
                 status: 'Online',
                 avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
-                phone: '51999999999' 
+                phone: '51999999999'
             },
             {
                 name: 'Carlos Mendo',
@@ -21,6 +21,13 @@ export default function whatsappWidget() {
             },
             {
                 name: 'María Díaz',
+                area: 'Atención al Socio',
+                status: 'Online',
+                avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+                phone: '51999999999'
+            },
+            {
+                name: 'Elber Galarga',
                 area: 'Atención al Socio',
                 status: 'Online',
                 avatar: 'https://randomuser.me/api/portraits/women/68.jpg',

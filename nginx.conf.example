@@ -1,0 +1,16 @@
+server {
+    listen 80;
+    server_name example.com;
+    root /var/www/html;
+
+    index index.html;
+
+    location / {
+        try_files $uri $uri.html $uri/ =404;
+    }
+
+    # Optional: Redirect .html to extensionless URL
+    # if ($request_uri ~ ^/(.*)\.html$) {
+    #     return 301 /$1;
+    # }
+}
