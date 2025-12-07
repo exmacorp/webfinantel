@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Préstamos - Finantel</title>
+
+    <link rel="icon" href="./assets/img/LogoAcceso.ico" type="image/jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <script type="module" src="./js/app.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body x-data="cookieConsent">
+
+    <!-- loader -->
+    <div x-data="{ 
+            isLoading: true, 
+            init() { 
+                window.addEventListener('finantel-loaded', () => { 
+                    setTimeout(() => { this.isLoading = false }, 2000) 
+                }) 
+            } 
+        }" x-show="isLoading" x-transition:leave="transition ease-in-out duration-700"
+        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+        class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white" style="display: flex;">
+
+        <div class="relative mb-8">
+            <img src="./assets/img/logo_fondo blanco.png" alt="Logo Finantel"
+                class="w-32 h-32 md:w-48 md:h-48 object-contain animate-breathe drop-shadow-xl">
+        </div>
+
+        <div class="w-40 h-1.5 bg-gray-100 rounded-full overflow-hidden relative">
+            <div
+                class="absolute top-0 left-0 h-full bg-[#FF7800] animate-progress-modern rounded-full shadow-[0_0_10px_rgba(255,120,0,0.6)]">
+            </div>
+        </div>
+
+    </div>
+    <div include-html="./partials/header.html"></div>
+
+    <main class="pt-[140px] lg:pt-[180px] pb-20 bg-light min-h-screen">
+
+        <section id="simulador" x-data="loanCalculator">
+            <div x-data="scrollReveal" x-bind="trigger" class="container mx-auto px-4 md:px-6">
+
+                <div class="text-center mb-12">
+                    <span class="text-accent font-bold tracking-wider uppercase text-sm">Herramientas Digitales</span>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-primary mb-4">Simula tu Préstamo</h1>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        Calcula tus cuotas al instante y elige el plan que mejor se adapte a tus necesidades.
+                    </p>
+                </div>
+
+                <div class="max-w-6xl mx-auto bg-white shadow-2xl rounded-3xl p-6 md:p-10 border border-gray-100">
+                    <div class="grid lg:grid-cols-12 gap-12">
+
+                        <!-- Columna Izquierda: Controles -->
+                        <div class="lg:col-span-7 space-y-10">
+
+                            <!-- Monto -->
+                            <div>
+                                <div class="flex justify-between items-center mb-4">
+                                    <label for="amount_slider" class="text-lg font-bold text-gray-700">Monto del
+                                        Préstamo</label>
+                                    <div class="relative">
+                                        <span
+                                            class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 font-bold">S/</span>
+                                        <input type="number" x-model.number="amount" @input="calculate()" min="1000"
+                                            max="100000" step="100"
+                                            class="w-32 pl-8 pr-3 py-2 border border-gray-300 rounded-lg text-right font-bold text-primary focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all">
+                                    </div>
+                                </div>
+
+                                <input type="range" id="amount_slider" x-model.number="amount" @input="calculate()"
+                                    min="1000" max="100000" step="500"
+                                    class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg accent-accent hover:opacity-90 transition-opacity">
+
+                                <div
+                                    class="flex justify-between text-xs font-semibold text-gray-400 mt-3 uppercase tracking-wide">
+                                    <span>S/ 1,000</span>
+                                    <span>S/ 100,000</span>
+                                </div>
+                            </div>
+
+                            <!-- Plazo -->
+                            <div>
+                                <div class="flex justify-between items-center mb-4">
+                                    <label for="months_slider" class="text-lg font-bold text-gray-700">Plazo de
+                                        Pago</label>
+                                    <div class="font-bold text-primary text-xl"><span x-text="months"></span> Meses
+                                    </div>
+                                </div>
+
+                                <input type="range" id="months_slider" x-model.number="months" @input="calculate()"
+                                    min="6" max="60" step="1"
+                                    class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg accent-primary hover:opacity-90 transition-opacity">
+
+                                <div
+                                    class="flex justify-between text-xs font-semibold text-gray-400 mt-3 uppercase tracking-wide">
+                                    <span>6 Meses</span>
+                                    <span>60 Meses</span>
+                                </div>
+
+                                <!-- Botones rápidos de plazo -->
+                                <div class="grid grid-cols-4 gap-3 mt-6">
+                                    <button @click="setMonths(12)"
+                                        :class="{'bg-blue-50 text-primary border-primary ring-1 ring-primary': months == 12, 'bg-white border-gray-200 text-gray-600 hover:border-gray-400': months != 12}"
+                                        class="py-2.5 border rounded-xl font-semibold transition-all text-sm">12
+                                        Meses</button>
+                                    <button @click="setMonths(24)"
+                                        :class="{'bg-blue-50 text-primary border-primary ring-1 ring-primary': months == 24, 'bg-white border-gray-200 text-gray-600 hover:border-gray-400': months != 24}"
+                                        class="py-2.5 border rounded-xl font-semibold transition-all text-sm">24
+                                        Meses</button>
+                                    <button @click="setMonths(36)"
+                                        :class="{'bg-blue-50 text-primary border-primary ring-1 ring-primary': months == 36, 'bg-white border-gray-200 text-gray-600 hover:border-gray-400': months != 36}"
+                                        class="py-2.5 border rounded-xl font-semibold transition-all text-sm">36
+                                        Meses</button>
+                                    <button @click="setMonths(48)"
+                                        :class="{'bg-blue-50 text-primary border-primary ring-1 ring-primary': months == 48, 'bg-white border-gray-200 text-gray-600 hover:border-gray-400': months != 48}"
+                                        class="py-2.5 border rounded-xl font-semibold transition-all text-sm">48
+                                        Meses</button>
+                                </div>
+                            </div>
+
+                            <div class="p-5 bg-blue-50 border border-blue-100 rounded-xl flex items-start gap-4">
+                                <i class="fas fa-info-circle text-primary text-xl mt-1"></i>
+                                <div>
+                                    <p class="text-sm text-gray-700 font-medium">Información Importante</p>
+                                    <p class="text-xs text-gray-500 mt-1">Tasa de Interés Referencial (TEA): <span
+                                            class="font-bold text-gray-700">15.9%</span>. La tasa final puede variar
+                                        según tu evaluación crediticia.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Columna Derecha: Resumen -->
+                        <div class="lg:col-span-5">
+                            <div
+                                class="bg-gray-900 text-white p-8 rounded-3xl h-full flex flex-col justify-between shadow-2xl relative overflow-hidden group">
+
+                                <!-- Decorative BG -->
+                                <div
+                                    class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none group-hover:bg-accent/30 transition-all duration-700">
+                                </div>
+                                <div
+                                    class="absolute bottom-0 left-0 w-48 h-48 bg-primary/40 rounded-full blur-3xl -ml-10 -mb-10 pointer-events-none">
+                                </div>
+
+                                <div class="relative z-10">
+                                    <h3 class="text-gray-300 text-sm font-bold uppercase tracking-widest mb-1">Cuota
+                                        Mensual Estimada</h3>
+                                    <div class="flex items-baseline gap-2 mb-8">
+                                        <span class="text-2xl font-bold text-accent">S/</span>
+                                        <span class="text-6xl font-extrabold tracking-tight text-white"
+                                            x-text="formatMoney(monthlyPayment)"></span>
+                                    </div>
+
+                                    <div class="space-y-4 mb-8">
+                                        <div
+                                            class="flex justify-between items-center text-sm border-b border-gray-700 pb-3">
+                                            <span class="text-gray-300">Capital Solicitado</span>
+                                            <span class="font-bold text-white">S/ <span
+                                                    x-text="formatMoney(amount)"></span></span>
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center text-sm border-b border-gray-700 pb-3">
+                                            <span class="text-gray-300">Intereses Totales</span>
+                                            <span class="font-bold text-accent">S/ <span
+                                                    x-text="formatMoney(totalInterest)"></span></span>
+                                        </div>
+                                        <div class="flex justify-between items-center text-lg font-bold pt-1">
+                                            <span class="text-white">Total a Pagar</span>
+                                            <span class="text-white">S/ <span
+                                                    x-text="formatMoney(totalPayment)"></span></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Barra visual de proporcion -->
+                                    <div class="w-full h-3 bg-gray-700 rounded-full overflow-hidden flex mb-2">
+                                        <div class="h-full bg-blue-500" :style="`width: ${(amount/totalPayment)*100}%`">
+                                        </div>
+                                        <div class="h-full bg-accent"
+                                            :style="`width: ${(totalInterest/totalPayment)*100}%`"></div>
+                                    </div>
+                                    <div
+                                        class="flex justify-between text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-8">
+                                        <div class="flex items-center gap-1">
+                                            <div class="w-2 h-2 rounded-full bg-blue-500"></div> Capital
+                                        </div>
+                                        <div class="flex items-center gap-1">
+                                            <div class="w-2 h-2 rounded-full bg-accent"></div> Interés
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="relative z-10 grid gap-3">
+                                    <button @click="openModal()"
+                                        class="w-full bg-accent hover:bg-orange-600 text-white py-4 rounded-xl font-bold shadow-lg shadow-orange-900/20 transition-all transform hover:scale-[1.02] active:scale-95 text-lg flex items-center justify-center gap-2">
+                                        <span>Solicitar Préstamo</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
+
+                                    <button @click="toggleSchedule()"
+                                        class="w-full bg-white/10 hover:bg-white/20 text-white py-3 rounded-xl font-semibold backdrop-blur-sm transition-all text-sm border border-white/10">
+                                        <span
+                                            x-text="showSchedule ? 'Ocultar Cronograma' : 'Ver Cronograma de Pagos'"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Cronograma de Pagos Desplegable -->
+                <div x-show="showSchedule" x-cloak x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 -translate-y-4"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 -translate-y-4"
+                    class="max-w-6xl mx-auto mt-8 bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-200">
+
+                    <div class="p-6 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                        <h3 class="font-bold text-gray-800 text-lg">Cronograma de Pagos Referencial</h3>
+                        <button @click="showSchedule = false"
+                            class="text-gray-400 hover:text-red-500 transition-colors"><i
+                                class="fas fa-times text-xl"></i></button>
+                    </div>
+
+                    <div class="overflow-x-auto max-h-[500px] overflow-y-auto custom-scrollbar">
+                        <table class="w-full text-sm text-left">
+                            <thead class="text-xs text-gray-500 uppercase bg-gray-50 sticky top-0 shadow-sm">
+                                <tr>
+                                    <th class="px-6 py-4 font-bold">N° Cuota</th>
+                                    <th class="px-6 py-4 font-bold">Saldo Inicial</th>
+                                    <th class="px-6 py-4 font-bold">Interés</th>
+                                    <th class="px-6 py-4 font-bold">Amortización</th>
+                                    <th class="px-6 py-4 font-bold">Cuota Total</th>
+                                    <th class="px-6 py-4 font-bold">Saldo Final</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <template x-for="(row, index) in schedule" :key="index">
+                                    <tr class="hover:bg-blue-50/50 transition-colors">
+                                        <td class="px-6 py-4 font-medium text-gray-900" x-text="row.number"></td>
+                                        <td class="px-6 py-4 text-gray-600">S/ <span
+                                                x-text="formatMoney(row.balance + row.principal)"></span></td>
+                                        <td class="px-6 py-4 text-orange-600 font-medium">S/ <span
+                                                x-text="formatMoney(row.interest)"></span></td>
+                                        <td class="px-6 py-4 text-green-600 font-medium">S/ <span
+                                                x-text="formatMoney(row.principal)"></span></td>
+                                        <td class="px-6 py-4 font-bold text-primary">S/ <span
+                                                x-text="formatMoney(row.payment)"></span></td>
+                                        <td class="px-6 py-4 text-gray-600">S/ <span
+                                                x-text="formatMoney(row.balance)"></span></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal de Contacto -->
+            <div x-show="showModal" style="display: none;" class="fixed inset-0 z-[60] overflow-y-auto"
+                aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                <!-- Backdrop -->
+                <div x-show="showModal" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" @click="closeModal()"></div>
+
+                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <div x-show="showModal" x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+
+                        <div class="bg-primary px-6 py-4 flex justify-between items-center">
+                            <h3 class="text-lg font-bold leading-6 text-white" id="modal-title">Solicitar Crédito</h3>
+                            <button @click="closeModal()" class="text-white/70 hover:text-white transition-colors"><i
+                                    class="fas fa-times"></i></button>
+                        </div>
+
+                        <div class="px-6 py-6 sm:p-8">
+                            <div class="mb-6 bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                <p class="text-sm font-semibold text-gray-700 text-center">
+                                    Estás solicitando: <span class="text-primary text-lg">S/ <span
+                                            x-text="formatMoney(amount)"></span></span>
+                                </p>
+                                <p class="text-xs text-center text-gray-500 mt-1">
+                                    A pagar en <span x-text="months"></span> meses con cuotas de S/ <span
+                                        x-text="formatMoney(monthlyPayment)"></span>
+                                </p>
+                            </div>
+
+                            <form @submit.prevent="submitForm()" class="space-y-4">
+                                <div>
+                                    <label for="name"
+                                        class="block text-xs font-semibold text-gray-700 uppercase mb-1">Nombre
+                                        Completo</label>
+                                    <input type="text" id="name" x-model="form.name" required
+                                        class="w-full rounded-lg border-gray-300 border p-3 text-sm focus:border-accent focus:ring-accent outline-none shadow-sm"
+                                        placeholder="Juan Pérez">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="dni"
+                                            class="block text-xs font-semibold text-gray-700 uppercase mb-1">DNI</label>
+                                        <input type="text" id="dni" x-model="form.dni" required maxlength="8"
+                                            pattern="[0-9]*"
+                                            class="w-full rounded-lg border-gray-300 border p-3 text-sm focus:border-accent focus:ring-accent outline-none shadow-sm"
+                                            placeholder="12345678">
+                                    </div>
+                                    <div>
+                                        <label for="phone"
+                                            class="block text-xs font-semibold text-gray-700 uppercase mb-1">Celular</label>
+                                        <input type="tel" id="phone" x-model="form.phone" required
+                                            class="w-full rounded-lg border-gray-300 border p-3 text-sm focus:border-accent focus:ring-accent outline-none shadow-sm"
+                                            placeholder="999 999 999">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="email"
+                                        class="block text-xs font-semibold text-gray-700 uppercase mb-1">Correo
+                                        Electrónico</label>
+                                    <input type="email" id="email" x-model="form.email" required
+                                        class="w-full rounded-lg border-gray-300 border p-3 text-sm focus:border-accent focus:ring-accent outline-none shadow-sm"
+                                        placeholder="juan@ejemplo.com">
+                                </div>
+
+                                <div class="flex items-start mt-4">
+                                    <div class="flex h-5 items-center">
+                                        <input id="terms" type="checkbox" required
+                                            class="h-4 w-4 rounded border-gray-300 text-accent focus:ring-accent">
+                                    </div>
+                                    <div class="ml-3 text-xs">
+                                        <label for="terms" class="font-medium text-gray-700">Acepto la política de
+                                            privacidad y tratamiento de datos personales.</label>
+                                    </div>
+                                </div>
+
+                                <div class="pt-4">
+                                    <button type="submit"
+                                        class="w-full bg-accent text-white font-bold py-3.5 rounded-xl hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/30">
+                                        Enviar Solicitud
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div include-html="./partials/footer.html"></div>
+    <div include-html="./partials/whatsapp.html"></div>
+
+</body>
+
+</html>

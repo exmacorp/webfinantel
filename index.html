@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finantel - Cooperativa de Ahorro y Crédito</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Finantel es una Cooperativa de Ahorro y Crédito sólida y confiable. Ofrecemos cuentas de ahorro, créditos de libre disponibilidad y depósitos a plazo fijo con excelentes tasas.">
+    <meta name="keywords"
+        content="cooperativa, ahorro y crédito, préstamos, inversiones, plazo fijo, finantel, créditos, ahorros, perú">
+    <meta name="author" content="Finantel">
+    <link rel="canonical" href="https://www.finantel.com.pe/">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.finantel.com.pe/">
+    <meta property="og:title" content="Finantel - Cooperativa de Ahorro y Crédito">
+    <meta property="og:description"
+        content="Impulsa tus metas con Finantel. Soluciones financieras confiables, ahorros seguros y créditos a tu medida.">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1000&auto=format&fit=crop">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.finantel.com.pe/">
+    <meta property="twitter:title" content="Finantel - Cooperativa de Ahorro y Crédito">
+    <meta property="twitter:description"
+        content="Impulsa tus metas con Finantel. Soluciones financieras confiables, ahorros seguros y créditos a tu medida.">
+    <meta property="twitter:image"
+        content="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1000&auto=format&fit=crop">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      "name": "Finantel",
+      "alternateName": "Cooperativa Finantel",
+      "url": "https://www.finantel.com.pe/",
+      "logo": "https://www.finantel.com.pe/assets/img/LogoAcceso.ico",
+      "description": "Cooperativa de Ahorro y Crédito ofreciendo servicios financieros de calidad, ahorros y créditos.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "PE",
+        "addressLocality": "Lima"
+      },
+      "priceRange": "$$",
+      "telephone": "+51123456789"
+    }
+    </script>
+    <link rel="icon" href="./assets/img/LogoAcceso.ico" type="image/jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script type="module" src="./js/app.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+</head>
+
+<body x-data="cookieConsent">
+
+    <!-- loader -->
+    <div x-data="{ 
+            isLoading: true, 
+            init() { 
+                window.addEventListener('finantel-loaded', () => { 
+                    setTimeout(() => { this.isLoading = false }, 2000) 
+                }) 
+            } 
+        }" x-show="isLoading" x-transition:leave="transition ease-in-out duration-700"
+        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+        class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white" style="display: flex;">
+
+        <div class="relative mb-8">
+            <img src="./assets/img/logo_fondo blanco.png" alt="Logo Finantel"
+                class="w-32 h-32 md:w-48 md:h-48 object-contain animate-breathe drop-shadow-xl">
+        </div>
+
+        <div class="w-40 h-1.5 bg-gray-100 rounded-full overflow-hidden relative">
+            <div
+                class="absolute top-0 left-0 h-full bg-[#FF7800] animate-progress-modern rounded-full shadow-[0_0_10px_rgba(255,120,0,0.6)]">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Header -->
+    <div include-html="./partials/header.html"></div>
+
+    <main class="pt-[100px] lg:pt-[115px]">
+
+        <section x-data="slider" @mouseenter="handleMouseEnter()" @mouseleave="handleMouseLeave()"
+            class="relative w-full overflow-hidden h-[500px] md:h-[600px] lg:h-[650px] bg-gray-900 group">
+
+            <template x-for="slide in slides" :key="slide.id">
+                <div class="absolute inset-0 w-full h-full">
+
+                    <img :src="slide.image" alt="Imagen financiera" class="w-full h-full object-cover slide-image"
+                        :class="{'active': activeSlide === slide.id}">
+
+                    <div
+                        class="absolute inset-0 bg-black opacity-60 md:opacity-40 md:bg-gradient-to-r md:from-black/80 md:to-transparent">
+                    </div>
+
+                    <div x-show="activeSlide === slide.id" x-cloak x-transition:enter="fade-in-up"
+                        class="absolute inset-0 flex items-center z-10">
+
+                        <div class="container mx-auto px-6 md:px-12 lg:px-20">
+                            <div class="max-w-3xl">
+                                <span
+                                    class="text-white font-bold uppercase tracking-wider text-sm bg-accent px-4 py-1 rounded-full inline-block mb-4"
+                                    x-text="slide.tagline"></span>
+
+                                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight"
+                                    x-html="slide.title"></h1>
+
+                                <p class="text-lg md:text-xl text-gray-200 mb-10" x-text="slide.description"></p>
+
+                                <a :href="slide.ctaLink"
+                                    class="bg-accent text-white px-10 py-4 rounded-xl font-bold shadow-xl text-lg hover:bg-orange-600 transition-smooth transform hover:scale-105 inline-block">
+                                    <span x-text="slide.ctaText"></span> <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <button @click="prevSlide()"
+                class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/30 p-4 rounded-full text-white hover:bg-white/50 focus:outline-none z-20 transition-smooth opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg backdrop-blur-sm">
+                <i class="fas fa-chevron-left text-xl"></i>
+            </button>
+            <button @click="nextSlide()"
+                class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/30 p-4 rounded-full text-white hover:bg-white/50 focus:outline-none z-20 transition-smooth opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg backdrop-blur-sm">
+                <i class="fas fa-chevron-right text-xl"></i>
+            </button>
+
+            <button @click="togglePlayPause()"
+                class="absolute bottom-8 right-8 z-30 flex items-center justify-center w-12 h-12 bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition-smooth border border-white/30 focus:outline-none shadow-lg group-hover:scale-105"
+                :title="isPlaying ? 'Pausar' : 'Reproducir'">
+                <i class="fas" :class="isPlaying ? 'fa-pause' : 'fa-play'"></i>
+            </button>
+
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+                <template x-for="slide in slides" :key="slide.id">
+                    <button @click="goToSlide(slide.id)"
+                        class="w-12 h-2 rounded-full focus:outline-none transition-smooth"
+                        :class="{'bg-accent shadow-lg': activeSlide === slide.id, 'bg-white/50 hover:bg-white/80': activeSlide !== slide.id}">
+                    </button>
+                </template>
+            </div>
+
+        </section>
+
+        <section class="py-24 relative overflow-hidden bg-light">
+
+            <div class="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
+                <svg viewBox="0 0 1440 320" class="absolute bottom-0 w-full h-auto text-white fill-current">
+                    <path
+                        d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+                    </path>
+                </svg>
+            </div>
+
+            <div x-data="scrollReveal" x-bind="trigger" class="container mx-auto px-4 md:px-6 relative z-10">
+
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-primary mb-6 leading-tight">
+                        Ser parte de Finantel tiene sus ventajas
+                    </h2>
+                    <p class="text-lg text-gray-600">
+                        Únete a una comunidad sólida y confiable, diseñada para ayudarte a crecer con beneficios
+                        exclusivos.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 lg:gap-10">
+
+                    <div
+                        class="group relative h-[450px] rounded-[30px] overflow-hidden shadow-xl cursor-pointer border-b-4 border-accent">
+                        <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1000&auto=format&fit=crop"
+                            alt="Confianza"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-[#002A8D]/95 via-[#002A8D]/40 to-transparent opacity-90">
+                        </div>
+
+                        <div
+                            class="absolute bottom-0 left-0 p-8 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-3xl font-bold text-white mb-2">Confianza</h3>
+
+                            <div class="w-12 h-1 bg-accent mb-4 transition-all duration-500 group-hover:w-20"></div>
+
+                            <p
+                                class="text-white/90 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 font-medium">
+                                Más de 30 años construyendo relaciones sólidas con nuestros socios.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white rounded-[30px] shadow-2xl p-8 flex flex-col items-center text-center justify-center transform transition-transform duration-500 hover:-translate-y-2 border border-gray-100 relative overflow-hidden">
+
+                        <div class="absolute top-[-50px] right-[-50px] w-40 h-40 bg-blue-50 rounded-full"></div>
+
+                        <div
+                            class="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center mb-6 shadow-sm group hover:scale-110 transition-transform">
+                            <i class="fas fa-shield-alt text-4xl text-accent"></i>
+                        </div>
+
+                        <h3 class="text-2xl font-bold text-primary mb-2">Clasificación de Riesgos</h3>
+
+                        <span class="text-sm font-bold text-primary bg-blue-100 px-4 py-1 rounded-full mb-6">Perspectiva
+                            Estable</span>
+
+                        <p class="text-gray-500 text-sm leading-relaxed mb-6">
+                            Bajo la supervisión de la SBS, ofrecemos servicios basados en la integridad y confianza.
+                        </p>
+
+                        <a href="#"
+                            class="text-accent font-bold hover:text-orange-600 hover:underline decoration-2 underline-offset-4 flex items-center transition-colors">
+                            Ver Memoria Anual <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+
+                    <div
+                        class="group relative h-[450px] rounded-[30px] overflow-hidden shadow-xl cursor-pointer border-b-4 border-accent">
+                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop"
+                            alt="Calidad de Servicio"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-[#002A8D]/95 via-[#002A8D]/40 to-transparent opacity-90">
+                        </div>
+
+                        <div
+                            class="absolute bottom-0 left-0 p-8 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-2xl font-bold text-white mb-2">Calidad de Servicio</h3>
+
+                            <div class="w-12 h-1 bg-accent mb-4 transition-all duration-500 group-hover:w-20"></div>
+
+                            <p
+                                class="text-white/90 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 font-medium">
+                                Atención personalizada y soluciones financieras a tu medida.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-light py-20">
+            <div x-data="scrollReveal" x-bind="trigger" class="container mx-auto px-4 md:px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-4">Nuestros Productos Estrella
+                </h2>
+                <p class="text-center text-gray-600 mb-12">Soluciones financieras diseñadas para impulsar tus metas.</p>
+
+                <div class="grid md:grid-cols-3 gap-10">
+
+                    <div
+                        class="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-smooth">
+                        <div class="p-8">
+                            <div
+                                class="text-sm font-bold text-green-600 bg-green-100 inline-block px-4 py-1 rounded-full mb-4">
+                                AHORROS</div>
+                            <h3 class="text-2xl font-bold text-primary mb-4">Cuenta Ahorro Digital</h3>
+                            <p class="text-gray-500 mb-6">Abre tu cuenta 100% online y empieza a ganar intereses desde
+                                el primer día. Sin costo de mantenimiento.</p>
+                            <div class="text-3xl font-bold text-accent mb-6">TREA 4.5%</div>
+                            <ul class="space-y-2 mb-8 text-gray-700">
+                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i>
+                                    Transferencias inmediatas</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i>
+                                    Tarjeta de débito VISA</li>
+                            </ul>
+                            <a href="#"
+                                class="block text-center bg-primary text-white py-3 rounded-lg font-semibold hover:bg-blue-900 transition-smooth">
+                                Ábrela aquí
+                            </a>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-primary rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-smooth relative border-2 border-accent">
+                        <div
+                            class="absolute top-0 right-0 bg-accent text-white text-sm font-bold px-5 py-2 rounded-bl-xl">
+                            Más Solicitado</div>
+                        <div class="p-8 mt-6">
+                            <div
+                                class="text-sm font-bold text-white bg-blue-800 inline-block px-4 py-1 rounded-full mb-4">
+                                CRÉDITOS</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Crédito de Libre Disponibilidad</h3>
+                            <p class="text-blue-200 mb-6">Solicita tu préstamo con aprobación inmediata y desembolso
+                                directo a tu cuenta. Tasas exclusivas para socios.</p>
+                            <div class="text-3xl font-bold text-accent mb-6">Rápido y Fácil</div>
+                            <ul class="space-y-2 mb-8 text-white">
+                                <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i>
+                                    Evaluación 100% online</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i>
+                                    Montos hasta S/ 50,000</li>
+                            </ul>
+                            <a href="#simulador"
+                                class="block text-center bg-accent text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-smooth">
+                                Solicítalo ahora
+                            </a>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-smooth">
+                        <div class="p-8">
+                            <div
+                                class="text-sm font-bold text-purple-600 bg-purple-100 inline-block px-4 py-1 rounded-full mb-4">
+                                INVERSIÓN</div>
+                            <h3 class="text-2xl font-bold text-primary mb-4">Depósito a Plazo Fijo</h3>
+                            <p class="text-gray-500 mb-6">Asegura la rentabilidad de tu dinero con nuestras tasas
+                                líderes en el mercado. Elige el plazo que más te convenga.</p>
+                            <div class="text-3xl font-bold text-accent mb-6">TREA hasta 7.0%</div>
+                            <ul class="space-y-2 mb-8 text-gray-700">
+                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i>
+                                    Plazos desde 90 días</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i>
+                                    Respaldo garantizado</li>
+                            </ul>
+                            <a href="#"
+                                class="block text-center bg-primary text-white py-3 rounded-lg font-semibold hover:bg-blue-900 transition-smooth">
+                                Calcula tu ganancia
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- seccion centro de experiencia al socio -->
+
+        <section class="py-24 bg-white relative overflow-hidden">
+            <div x-data="scrollReveal" class="container mx-auto px-4 md:px-6 relative z-10">
+
+                <!-- Animated Content Wrapper -->
+                <div x-bind="trigger">
+                    <div class="text-center max-w-4xl mx-auto mb-16">
+                        <h2 class="text-4xl md:text-5xl font-extrabold text-primary mb-6 leading-tight">
+                            Nuestro centro de experiencia al socio
+                        </h2>
+                        <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+                            Sabemos que cada pregunta es importante. Nuestro equipo está listo para apoyarte en
+                            cada paso de tu camino financiero. ¿Tienes dudas? ¡Contáctanos ahora!
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8 lg:gap-12">
+
+                        <!-- Card 1: Llámanos -->
+                        <div
+                            class="group relative bg-white rounded-[30px] p-10 text-center shadow-xl transition-all duration-300 hover:bg-[#002A8D] hover:-translate-y-2 cursor-pointer overflow-hidden border border-gray-100 hover:border-transparent">
+
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div
+                                    class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center text-[#002A8D] text-4xl mb-8 shadow-sm group-hover:bg-white group-hover:text-[#002A8D] group-hover:scale-110 group-hover:rotate-[15deg] transition-all duration-300">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <h3
+                                    class="text-2xl font-bold text-[#002A8D] mb-3 group-hover:text-white transition-colors">
+                                    Llámanos</h3>
+                                <p class="text-gray-500 mb-1 group-hover:text-blue-100 transition-colors">Central
+                                    Telefónica</p>
+                                <p class="text-xl font-bold text-gray-800 group-hover:text-white transition-colors">
+                                    614-8787</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Conversa con Dana -->
+                        <div
+                            class="group relative bg-white rounded-[30px] p-10 text-center shadow-xl transition-all duration-300 hover:bg-[#002A8D] hover:-translate-y-2 cursor-pointer overflow-hidden border border-gray-100 hover:border-transparent">
+
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div
+                                    class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center text-[#002A8D] text-4xl mb-8 shadow-sm group-hover:bg-white group-hover:text-[#002A8D] group-hover:scale-110 group-hover:rotate-[-10deg] transition-all duration-300">
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>
+                                <h3
+                                    class="text-2xl font-bold text-[#002A8D] mb-3 group-hover:text-white transition-colors">
+                                    Conversa con Dana</h3>
+                                <p class="text-gray-500 mb-1 group-hover:text-blue-100 transition-colors">Escríbenos al
+                                    WhatsApp</p>
+                                <p class="text-xl font-bold text-gray-800 group-hover:text-white transition-colors">951
+                                    600 220</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Escríbenos -->
+                        <div
+                            class="group relative bg-white rounded-[30px] p-10 text-center shadow-xl transition-all duration-300 hover:bg-[#002A8D] hover:-translate-y-2 cursor-pointer overflow-hidden border border-gray-100 hover:border-transparent">
+
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div
+                                    class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center text-[#002A8D] text-3xl mb-8 shadow-sm group-hover:bg-white group-hover:text-[#002A8D] group-hover:scale-110 group-hover:rotate-[15deg] transition-all duration-300">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <h3
+                                    class="text-2xl font-bold text-[#002A8D] mb-3 group-hover:text-white transition-colors">
+                                    Escríbenos</h3>
+                                <p class="text-gray-500 mb-1 group-hover:text-blue-100 transition-colors">Correo
+                                    Electrónico</p>
+                                <p
+                                    class="text-lg font-bold text-gray-800 group-hover:text-white transition-colors break-all">
+                                    experienciaalsocio@finantel.com.pe</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section x-data="scrollReveal" class="py-12 md:py-20 bg-primary relative overflow-hidden flex items-center">
+            <!-- Background element -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full text-white fill-current">
+                    <path d="M0 100 C 20 0 50 0 100 100 Z"></path>
+                </svg>
+            </div>
+
+            <div x-data="{ activeTab: 'lima' }" x-bind="trigger" class="container mx-auto px-4 md:px-6 relative z-10">
+
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16">
+
+                    <!-- Left Column: Content & Tabs -->
+                    <div class="w-full lg:w-5/12 text-center lg:text-left">
+                        <div class="mb-8 lg:mb-10">
+                            <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4 md:mb-6 leading-tight">
+                                Cada vez más cerca de ti
+                            </h2>
+                            <p class="text-base md:text-lg text-blue-200">
+                                Contamos con agencias estratégicas para estar a tu lado cuando más nos necesitas.
+                                Visítanos en nuestra sede principal o en nuestra agencia de Miraflores.
+                            </p>
+                        </div>
+
+                        <!-- Tabs/Buttons -->
+                        <div class="flex justify-center lg:justify-start flex-wrap gap-4">
+                            <button @click="activeTab = 'lima'"
+                                :class="activeTab === 'lima' ? 'bg-white text-primary scale-105 shadow-xl' : 'bg-transparent text-white border border-white/30 hover:bg-white/10'"
+                                class="px-8 py-3 rounded-full font-bold text-lg transition-all duration-300 w-full sm:w-auto">
+                                <i class="fas fa-map-marker-alt mr-2"
+                                    :class="activeTab === 'lima' ? 'text-accent' : ''"></i> Lima
+                            </button>
+                            <button @click="activeTab = 'miraflores'"
+                                :class="activeTab === 'miraflores' ? 'bg-white text-primary scale-105 shadow-xl' : 'bg-transparent text-white border border-white/30 hover:bg-white/10'"
+                                class="px-8 py-3 rounded-full font-bold text-lg transition-all duration-300 w-full sm:w-auto">
+                                <i class="fas fa-building mr-2"
+                                    :class="activeTab === 'miraflores' ? 'text-accent' : ''"></i> Miraflores
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Cards -->
+                    <div class="w-full lg:w-1/2 relative">
+
+                        <!-- Agencia Lima Card -->
+                        <div x-show="activeTab === 'lima'" x-transition:enter="transition ease-out duration-500"
+                            x-transition:enter-start="opacity-0 translate-x-12"
+                            x-transition:enter-end="opacity-100 translate-x-0"
+                            class="bg-white rounded-[30px] overflow-hidden shadow-2xl mx-auto w-full max-w-md lg:max-w-full">
+
+                            <!-- Card Header -->
+                            <div class="bg-blue-900 h-32 relative flex items-center p-6 md:p-8 overflow-hidden">
+                                <div class="relative z-10">
+                                    <span
+                                        class="text-accent font-bold uppercase tracking-wider text-xs block mb-1">Agencia
+                                        Principal</span>
+                                    <h3 class="text-3xl font-extrabold text-white">Lima</h3>
+                                </div>
+                                <div class="absolute right-0 bottom-0 opacity-20 transform translate-x-4 translate-y-4">
+                                    <i class="fas fa-building text-9xl text-white"></i>
+                                </div>
+                                <svg class="absolute bottom-0 left-0 w-full h-10 text-white fill-current"
+                                    viewBox="0 0 1440 320" preserveAspectRatio="none">
+                                    <path fill-opacity="1" d="M0,224L1440,32L1440,320L0,320Z"></path>
+                                </svg>
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 md:p-8">
+                                <div class="flex items-start mb-6">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mr-4 text-primary text-xl">
+                                        <i class="fas fa-map-marked-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-primary font-bold text-lg mb-1">Ubicación</h4>
+                                        <p class="text-gray-600 font-medium">Av. Bolivia 258</p>
+                                        <p class="text-sm text-gray-400 mt-1">Cercado de Lima</p>
+                                    </div>
+                                </div>
+
+                                <div class="w-full h-px bg-gray-100 mb-6"></div>
+
+                                <div class="flex items-start">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 mr-4 text-accent text-xl">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-primary font-bold text-lg mb-1">Horario de Atención</h4>
+                                        <p class="text-gray-600 text-sm mb-1"><span
+                                                class="font-bold text-gray-800">Lunes a Viernes:</span> 9:00 am - 6:00
+                                            pm</p>
+                                        <p class="text-gray-600 text-sm"><span
+                                                class="font-bold text-gray-800">Sábados:</span> 9:00 am - 1:00 pm</p>
+                                    </div>
+                                </div>
+
+                                <a href="https://maps.google.com/?q=Av.+Bolivia+258+Lima" target="_blank"
+                                    class="block w-full mt-6 bg-primary text-white text-center py-3.5 rounded-xl font-bold hover:bg-blue-800 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                    Cómo llegar <i class="fas fa-location-arrow ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Agencia Miraflores Card -->
+                        <div x-show="activeTab === 'miraflores'" x-cloak
+                            x-transition:enter="transition ease-out duration-500"
+                            x-transition:enter-start="opacity-0 translate-x-12"
+                            x-transition:enter-end="opacity-100 translate-x-0"
+                            class="bg-white rounded-[30px] overflow-hidden shadow-2xl mx-auto w-full max-w-md lg:max-w-full">
+
+                            <!-- Card Header -->
+                            <div class="bg-blue-900 h-32 relative flex items-center p-6 md:p-8 overflow-hidden">
+                                <div class="relative z-10">
+                                    <span
+                                        class="text-accent font-bold uppercase tracking-wider text-xs block mb-1">Agencia</span>
+                                    <h3 class="text-3xl font-extrabold text-white">Miraflores</h3>
+                                </div>
+                                <div class="absolute right-0 bottom-0 opacity-20 transform translate-x-4 translate-y-4">
+                                    <i class="fas fa-city text-9xl text-white"></i>
+                                </div>
+                                <svg class="absolute bottom-0 left-0 w-full h-10 text-white fill-current"
+                                    viewBox="0 0 1440 320" preserveAspectRatio="none">
+                                    <path fill-opacity="1" d="M0,224L1440,32L1440,320L0,320Z"></path>
+                                </svg>
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 md:p-8">
+                                <div class="flex items-start mb-6">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mr-4 text-primary text-xl">
+                                        <i class="fas fa-map-marked-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-primary font-bold text-lg mb-1">Ubicación</h4>
+                                        <p class="text-gray-600 font-medium">C. Independencia 310</p>
+                                        <p class="text-sm text-gray-400 mt-1">Miraflores</p>
+                                    </div>
+                                </div>
+
+                                <div class="w-full h-px bg-gray-100 mb-6"></div>
+
+                                <div class="flex items-start">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 mr-4 text-accent text-xl">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-primary font-bold text-lg mb-1">Horario de Atención</h4>
+                                        <p class="text-gray-600 text-sm mb-1"><span
+                                                class="font-bold text-gray-800">Lunes a Viernes:</span> 9:00 am - 6:00
+                                            pm</p>
+                                        <p class="text-gray-600 text-sm"><span
+                                                class="font-bold text-gray-800">Sábados:</span> 9:00 am - 1:00 pm</p>
+                                    </div>
+                                </div>
+
+                                <a href="https://maps.google.com/?q=C.+Independencia+310+Miraflores" target="_blank"
+                                    class="block w-full mt-6 bg-primary text-white text-center py-3.5 rounded-xl font-bold hover:bg-blue-800 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                    Cómo llegar <i class="fas fa-location-arrow ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-white relative overflow-hidden" x-data="testimonials">
+
+            <div x-data="scrollReveal" x-bind="trigger" class="container mx-auto px-4 md:px-6">
+
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                    <div class="max-w-2xl">
+                        <h2 class="text-4xl md:text-5xl font-extrabold text-primary mb-4 leading-tight">
+                            Lo que nuestros socios dicen
+                        </h2>
+                        <p class="text-gray-600 text-lg">
+                            Lee las historias inspiradoras de quienes ya forman parte de nuestra comunidad.
+                        </p>
+                    </div>
+
+                    <div class="flex space-x-4">
+
+                        <button @click="prev()" :disabled="isAtStart"
+                            class="w-12 h-12 rounded-full border-2 border-gray-200 flex items-center justify-center transition-all duration-300 focus:outline-none shadow-sm
+                                    bg-white text-[#002A8D]
+                                    disabled:opacity-50 disabled:cursor-not-allowed
+                                    enabled:hover:bg-[#002A8D] enabled:hover:border-[#002A8D] enabled:hover:text-white enabled:hover:shadow-lg">
+
+                            <i class="fas fa-chevron-left text-lg"></i>
+                        </button>
+
+                        <button @click="next()" :disabled="isAtEnd"
+                            class="w-12 h-12 rounded-full border-2 border-gray-200 flex items-center justify-center transition-all duration-300 focus:outline-none shadow-sm
+                                    bg-white text-[#002A8D]
+                                    disabled:opacity-50 disabled:cursor-not-allowed
+                                    enabled:hover:bg-[#002A8D] enabled:hover:border-[#002A8D] enabled:hover:text-white enabled:hover:shadow-lg">
+
+                            <i class="fas fa-chevron-right text-lg"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="overflow-hidden py-4 -mx-4 px-4"
+                    style="-webkit-mask-image: linear-gradient(to right, transparent 0%, black 1%, black 99%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 1%, black 99%, transparent 100%);">
+
+                    <div class="flex transition-transform duration-500 ease-in-out"
+                        :style="`transform: translateX(-${current * (100 / visibleItems)}%)`">
+
+                        <template x-for="item in items" :key="item.name">
+
+                            <div class="flex-shrink-0 px-4 transition-all duration-300"
+                                :style="`width: ${100 / visibleItems}%`">
+
+                                <div
+                                    class="bg-white p-8 rounded-[20px] border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full hover:-translate-y-1">
+
+                                    <div class="flex text-yellow-400 mb-6 text-sm space-x-1">
+                                        <template x-for="i in item.stars">
+                                            <i class="fas fa-star"></i>
+                                        </template>
+                                    </div>
+
+                                    <div class="flex-grow">
+                                        <p class="text-gray-600 text-[15px] leading-relaxed mb-8 italic">
+                                            "<span x-text="item.quote"></span>"
+                                        </p>
+                                    </div>
+
+                                    <div class="flex items-center pt-6 border-t border-gray-100">
+                                        <img :src="item.image" :alt="item.name"
+                                            class="w-12 h-12 rounded-full object-cover mr-4 border-2 border-gray-100">
+                                        <div>
+                                            <h4 class="font-bold text-primary text-sm" x-text="item.name"></h4>
+                                            <p class="text-xs text-gray-500 mt-0.5" x-text="item.role"></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </template>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="py-16 bg-white overflow-hidden" x-data="partnerCarousel">
+            <div x-data="scrollReveal" x-bind="trigger" class="container mx-auto px-4">
+
+                <div class="text-center mb-12">
+                    <span class="text-accent font-bold tracking-wider uppercase text-sm">Respaldo y Confianza</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2" style="color: var(--color-primary);">
+                        Empresas que confían en nosotros
+                    </h2>
+                    <div class="w-24 h-1 bg-accent mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="relative w-full max-w-7xl mx-auto group">
+
+                    <div
+                        class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none">
+                    </div>
+
+                    <div class="flex overflow-hidden pointer-events-none sm:pointer-events-auto">
+
+                        <div class="flex space-x-10 animate-marquee group-hover:paused items-center flex-shrink-0">
+                            <template x-for="logo in logos" :key="logo.id">
+                                <div class="flex-shrink-0 w-40 h-24 flex items-center justify-center relative">
+                                    <img :src="basePath + logo.file" :alt="logo.alt"
+                                        class="w-auto h-auto max-w-full max-h-[60px] object-contain 
+                                                    filter grayscale opacity-60 
+                                                    hover:grayscale-0 hover:opacity-100 
+                                                    transition-bounce duration-500
+                                                    transform hover:scale-125 hover:-translate-y-2 cursor-pointer pointer-events-auto">
+                                </div>
+                            </template>
+                        </div>
+
+                        <div aria-hidden="true"
+                            class="flex space-x-10 animate-marquee group-hover:paused items-center flex-shrink-0 ml-10">
+                            <template x-for="logo in logos" :key="logo.id + '_duplicate'">
+                                <div class="flex-shrink-0 w-40 h-24 flex items-center justify-center relative">
+                                    <img :src="basePath + logo.file" :alt="logo.alt"
+                                        class="w-auto h-auto max-w-full max-h-[60px] object-contain 
+                                                    filter grayscale opacity-60 
+                                                    hover:grayscale-0 hover:opacity-100 
+                                                    transition-bounce duration-500
+                                                    transform hover:scale-125 hover:-translate-y-2 cursor-pointer pointer-events-auto">
+                                </div>
+                            </template>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div include-html="./partials/footer.html"></div>
+
+    <div x-show="isVisible" x-cloak x-transition:enter="transition ease-out duration-500"
+        x-transition:enter-start="opacity-0 translate-y-full" x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 translate-y-full"
+        class="fixed inset-x-0 bottom-0 z-50 bg-white shadow-xl border-t border-gray-200"
+        style="box-shadow: 0 -4px 20px rgba(0, 42, 141, 0.1);" style="display: none;">
+
+        <div class="container mx-auto px-4 py-6 md:py-5">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+
+                <div class="flex items-start gap-4 flex-1">
+                    <div class="text-primary text-3xl mt-1 hidden sm:block bg-blue-50 p-3 rounded-lg">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">Tu privacidad y seguridad son nuestra prioridad
+                        </h3>
+                        <p class="text-sm text-gray-600">
+                            Utilizamos cookies propias y de terceros para mejorar nuestros servicios, personalizar tu
+                            experiencia de navegación y garantizar la seguridad de tus operaciones. Al hacer clic en
+                            "Aceptar", consientes el uso de todas las cookies.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto lg:flex-shrink-0 items-center">
+                    <a href="#mas-informacion"
+                        class="text-center text-sm font-semibold text-gray-600 hover:text-primary transition-smooth py-3 px-5 rounded-lg hover:bg-gray-100">
+                        Más Información
+                    </a>
+
+                    <button @click="configureCookies()"
+                        class="text-center text-sm font-semibold text-primary border-2 border-primary hover:bg-blue-50 transition-smooth py-3 px-6 rounded-lg shadow-sm w-full sm:w-auto">
+                        Configurar
+                    </button>
+
+                    <button @click="acceptCookies()"
+                        class="text-center text-sm font-bold text-white bg-accent hover:bg-orange-600 transition-smooth py-3 px-8 rounded-lg shadow-md transform hover:scale-105 w-full sm:w-auto">
+                        Aceptar Todo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Boton de WhatsApp -->
+    <div include-html="./partials/whatsapp.html"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+    <header x-data="megaMenu" class="fixed w-full top-0 z-40 bg-white shadow-lg transition-transform duration-500 ease-in-out rounded-b-[30px]" :class="showNavbar ? 'translate-y-0' : '-translate-y-full'">
+        <div class="container mx-auto px-4 md:px-8 py-2 flex justify-between items-center relative">
+            
+            <a href="index.html" class="flex items-center">
+                <img 
+                    src="./assets/img/logo_fondo blanco.png" 
+                    alt="Cooperativa Finantel" 
+                    class="h-14 md:h-20 lg:h-24 w-auto object-contain transition-smooth hover:scale-105"
+                >
+            </a>
+
+            <nav class="hidden lg:flex space-x-10 items-center">
+        
+                <div @mouseenter="openMenu()" @mouseleave="closeMenu()">
+                    <a href="#" class="text-gray-700 hover:text-primary font-semibold transition-smooth py-4 flex items-center cursor-pointer"
+                    :class="{'text-primary': isOpen}">
+                        Productos y Servicios <i class="fas fa-chevron-down ml-2 text-xs transform transition-transform duration-200" :class="{'rotate-180': isOpen}"></i>
+                    </a>
+                    
+                    <div x-show="isOpen" x-cloak
+                        @mouseenter="openMenu()" 
+                        @mouseleave="closeMenu()"
+                        x-transition:enter="transition ease-out duration-250"
+                        x-transition:enter-start="opacity-0 translate-y-2"
+                        x-transition:enter-end="opacity-100 translate-y-0"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 translate-y-0"
+                        x-transition:leave-end="opacity-0 translate-y-2"
+                        class="fixed left-1/2 transform -translate-x-1/2 top-[90px] w-[95vw] max-w-[1100px] bg-white shadow-2xl rounded-xl overflow-hidden border border-gray-100 z-50"
+                        style="display: none;">
+                        
+                        <div class="flex h-[500px]">
+                            <div class="w-[250px] bg-gray-50 p-5 border-r overflow-y-auto">
+                                <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Explorar por Categoría</h3>
+                                <div class="space-y-3">
+                                    <template x-for="(category, key) in categories" :key="key">
+                                        <div @mouseenter="activeCategory = key" 
+                                            class="flex items-center p-3 rounded-lg cursor-pointer transition-smooth group"
+                                            :class="{'bg-white shadow-md border border-blue-100': activeCategory === key, 'hover:bg-white hover:shadow-sm': activeCategory !== key}">
+                                            
+                                            <div class="w-12 h-12 flex items-center justify-center rounded-full mr-4 transition-smooth"
+                                                :class="{'bg-primary text-white': activeCategory === key, 'bg-blue-100 text-primary group-hover:bg-primary group-hover:text-white': activeCategory !== key}">
+                                                <i :class="category.icon" class="text-xl"></i>
+                                            </div>
+                                            
+                                            <span class="font-semibold text-sm text-gray-800" x-text="category.name"></span>
+                                            <i class="fas fa-chevron-right ml-auto text-xs text-accent" x-show="activeCategory === key"></i>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="flex-1 p-8 overflow-y-auto">
+                                <h3 class="text-3xl font-bold text-primary mb-4" x-text="categories[activeCategory].name"></h3>
+                                <p class="text-gray-600 mb-8" x-text="categories[activeCategory].description"></p>
+                                <div class="grid grid-cols-2 gap-x-8 gap-y-6">
+                                    <template x-for="item in categories[activeCategory].items" :key="item.name">
+                                        <a :href="item.link" class="group block border-l-4 border-transparent hover:border-accent pl-4 transition-smooth">
+                                            <p class="font-semibold text-gray-800 group-hover:text-accent transition-smooth" x-text="item.name"></p>
+                                            <p class="text-sm text-gray-500 mt-1" x-text="item.description"></p>
+                                        </a>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="w-[280px] p-6 bg-blue-50">
+                                <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full transition-smooth hover:shadow-xl flex flex-col">
+                                    <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=800&auto=format&fit=crop" alt="Promoción" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex flex-col flex-grow">
+                                        <span class="bg-accent text-white text-xs font-bold px-3 py-1 rounded-full inline-block mb-4 w-fit">¡EXCLUSIVO!</span>
+                                        <h4 class="text-xl font-bold text-primary mb-3">Préstamo Online</h4>
+                                        <p class="text-sm text-gray-600 mb-6">Solicítalo y recíbelo al instante.</p>
+                                        <a href="#" class="mt-auto bg-primary text-white text-center py-3 rounded-lg font-bold transition-smooth hover:bg-blue-900">Ver más</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" class="text-gray-700 hover:text-primary font-semibold transition-smooth py-2">Educación Financiera</a>
+                <a href="#" class="text-gray-700 hover:text-primary font-semibold transition-smooth py-2">Nosotros</a>
+                <a href="#" class="text-gray-700 hover:text-primary font-semibold transition-smooth py-2">Ayuda</a>
+            </nav>
+
+            <div class="hidden lg:flex items-center space-x-4">
+                <a href="simulador.html" class="block text-center bg-primary text-white px-6 py-3 rounded-lg font-semibold"><i class="fas fa-calculator mr-2"></i> Simulador de Préstamo</a>
+                <a href="#" class="bg-accent text-white px-5 py-2.5 rounded-lg font-bold shadow-md hover:opacity-90 transition-smooth transform hover:scale-105 text-sm">
+                    Hazte Socio
+                </a>
+            </div>
+
+            <button @click="isMobileOpen = !isMobileOpen" class="lg:hidden text-primary focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <div x-show="isMobileOpen" x-cloak
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 -translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-2"
+            class="lg:hidden bg-white border-t rounded-b-[30px] shadow-inner" style="display: none;">
+            <nav class="flex flex-col p-6 space-y-4">
+                <a href="#" class="text-gray-700 hover:text-primary font-semibold">Productos y Servicios</a>
+                <a href="#" class="text-gray-700 hover:text-primary font-semibold">Educación Financiera</a>
+                <a href="#" class="text-gray-700 hover:text-primary font-semibold">Nosotros</a>
+                <a href="#" class="text-gray-700 hover:text-primary font-semibold">Ayuda</a>
+                <div class="pt-4 mt-2 border-t space-y-3">
+                    <a href="simulador.html" class="block text-center bg-primary text-white px-6 py-3 rounded-lg font-semibold"><i class="fas fa-calculator mr-2"></i> Simulador de Préstamo</a>
+                    <a href="#" class="block text-center bg-accent text-white px-6 py-3 rounded-lg font-semibold">Hazte Socio</a>
+                </div>
+            </nav>
+        </div>
+    </header>

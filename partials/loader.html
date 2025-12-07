@@ -1,0 +1,19 @@
+    <div x-data="loader"
+        x-show="isLoading"
+        x-transition:leave="transition ease-in-out duration-700"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white"
+        style="display: flex;">
+        
+        <div class="relative mb-8">
+        <img src="./assets/img/logo_fondo blanco.png" 
+            alt="Logo Finantel" 
+            class="w-32 h-32 md:w-48 md:h-48 object-contain animate-breathe drop-shadow-xl">
+        </div>
+
+        <div class="w-40 h-1.5 bg-gray-100 rounded-full overflow-hidden relative">
+            <div class="absolute top-0 left-0 h-full bg-[#FF7800] animate-progress-modern rounded-full shadow-[0_0_10px_rgba(255,120,0,0.6)]"></div>
+        </div>
+
+    </div>
