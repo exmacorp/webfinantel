@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+[redirects]
+  # Pretty URLs
+  from = "/*"
+  to = "/:splat.html"
+  status = 200
