@@ -2,8 +2,10 @@
    1. VARIABLES Y CONFIGURACIÓN BASE
    ========================================= */
 :root {
-    --color-primary: #002A8D; /* Azul BCP/Profesional */
-    --color-accent: #FF7800; /* Naranja CTA */
+    --color-primary: #002A8D;
+    /* Azul BCP/Profesional */
+    --color-accent: #FF7800;
+    /* Naranja CTA */
     --color-bg-light: #F4F7FC;
 }
 
@@ -14,8 +16,14 @@ body {
 }
 
 /* Mejora estética para títulos con la nueva fuente */
-h1, h2, h3, h4, h5, h6 {
-    letter-spacing: -0.03em; /* Hace que los títulos se vean más sólidos y modernos */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    letter-spacing: -0.03em;
+    /* Hace que los títulos se vean más sólidos y modernos */
 }
 
 /* Ocultar elementos Alpine antes de que carguen */
@@ -26,13 +34,33 @@ h1, h2, h3, h4, h5, h6 {
 /* =========================================
    2. CLASES DE UTILIDAD PERSONALIZADAS
    ========================================= */
-.text-primary { color: var(--color-primary); }
-.bg-primary { background-color: var(--color-primary); }
-.border-primary { border-color: var(--color-primary); }
-.text-accent { color: var(--color-accent); }
-.bg-accent { background-color: var(--color-accent); }
-.border-accent { border-color: var(--color-accent); }
-.bg-light { background-color: var(--color-bg-light); }
+.text-primary {
+    color: var(--color-primary);
+}
+
+.bg-primary {
+    background-color: var(--color-primary);
+}
+
+.border-primary {
+    border-color: var(--color-primary);
+}
+
+.text-accent {
+    color: var(--color-accent);
+}
+
+.bg-accent {
+    background-color: var(--color-accent);
+}
+
+.border-accent {
+    border-color: var(--color-accent);
+}
+
+.bg-light {
+    background-color: var(--color-bg-light);
+}
 
 /* Transiciones suaves tipo Fintech */
 .transition-smooth {
@@ -51,12 +79,15 @@ h1, h2, h3, h4, h5, h6 {
 .slide-image {
     transition: transform 7s ease-out, opacity 0.8s ease-in-out;
     transform: scale(1);
-    opacity: 0; /* Oculto por defecto */
+    opacity: 0;
+    /* Oculto por defecto */
 }
 
 .slide-image.active {
-    transform: scale(1.05); /* Zoom sutil */
-    opacity: 1; /* Visible cuando está activo */
+    transform: scale(1.05);
+    /* Zoom sutil */
+    opacity: 1;
+    /* Visible cuando está activo */
 }
 
 /* Animación Fade In Up para textos */
@@ -69,6 +100,7 @@ h1, h2, h3, h4, h5, h6 {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -79,8 +111,13 @@ h1, h2, h3, h4, h5, h6 {
    4. ANIMACIONES DE PARTNERS (Marquesina)
    ========================================= */
 @keyframes marquee {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-100%); }
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 .animate-marquee {
@@ -97,10 +134,23 @@ h1, h2, h3, h4, h5, h6 {
    ========================================= */
 /* Animación de "Vibración" para el teléfono */
 @keyframes wiggle {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-15deg); }
-    50% { transform: rotate(15deg); }
-    75% { transform: rotate(-10deg); }
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-15deg);
+    }
+
+    50% {
+        transform: rotate(15deg);
+    }
+
+    75% {
+        transform: rotate(-10deg);
+    }
 }
 
 .group-hover\:animate-wiggle:hover {
@@ -116,13 +166,19 @@ h1, h2, h3, h4, h5, h6 {
 /* 1. Animación "Breathing" para el Logo */
 /* 1. Animación "Breathing" (Latido) */
 @keyframes breathe {
-    0%, 100% { 
-        transform: scale(1.1); /* ESTADO INICIAL: GRANDE (110%) */
+
+    0%,
+    100% {
+        transform: scale(1.1);
+        /* ESTADO INICIAL: GRANDE (110%) */
         opacity: 1;
-        filter: brightness(1.05); /* Un poco más brillante al estar grande */
+        filter: brightness(1.05);
+        /* Un poco más brillante al estar grande */
     }
-    50% { 
-        transform: scale(1);   /* SE REDUCE: TAMAÑO NORMAL (100%) */
+
+    50% {
+        transform: scale(1);
+        /* SE REDUCE: TAMAÑO NORMAL (100%) */
         opacity: 0.9;
         filter: brightness(1);
     }
@@ -135,20 +191,98 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 2. Animación Moderna para la Barra */
 @keyframes progress-modern {
-    0% { 
-        width: 0%; 
+    0% {
+        width: 0%;
         left: 0;
     }
-    50% { 
-        width: 70%; 
-        left: 15%; /* Se mueve un poco mientras crece */
+
+    50% {
+        width: 70%;
+        left: 15%;
+        /* Se mueve un poco mientras crece */
     }
-    100% { 
-        width: 100%; 
+
+    100% {
+        width: 100%;
         left: 0;
     }
 }
 
 .animate-progress-modern {
     animation: progress-modern 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* =========================================
+   7. TARJETAS EXPERIENCIA AL SOCIO (HOVER)
+   ========================================= */
+/* =========================================
+   7. TARJETAS EXPERIENCIA AL SOCIO (HOVER)
+   ========================================= */
+.hover-card-bg {
+    background-color: var(--color-primary);
+    /* Color base institucional */
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 0;
+    /* Detrás del contenido */
+    overflow: hidden;
+    /* Para recortar las formas que sobresalen */
+}
+
+/* Efectos de Manchas Orgánicas (Solicitado por Usuario) */
+.hover-card-bg::before {
+    content: "";
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    top: 20px;
+    left: -40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: transform 0.6s ease-out;
+}
+
+.hover-card-bg::after {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 80px;
+    top: 40px;
+    left: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 60% 40% 30% 70% / 40% 60% 80% 60%;
+    transition: transform 0.6s ease-out 0.1s;
+    /* Retraso para efecto cascada */
+}
+
+.decorative-circle {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: transform 0.6s ease-out 0.2s;
+    pointer-events: none;
+}
+
+/* Asegurar que el contenido esté encima */
+.group:hover .hover-card-bg {
+    opacity: 1;
+}
+
+/* Animaciones de movimiento suave al hacer hover */
+.group:hover .hover-card-bg::before {
+    transform: scale(1.1) translate(5px, 5px);
+}
+
+.group:hover .hover-card-bg::after {
+    transform: scale(1.05) rotate(3deg);
+}
+
+.group:hover .decorative-circle {
+    transform: scale(1.2) translate(-2px, 2px);
 }
