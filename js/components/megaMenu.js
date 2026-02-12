@@ -1,9 +1,10 @@
- // 2. Componente: Mega Menú Interactivo (CORREGIDO)
 export default function megaMenu() {
     return {
         // Estado del menú
-        isOpen: false,
-        isMobileOpen: false,
+        isOpen: false,       // Desktop
+        isMobileOpen: false, // Móvil (Visibilidad del panel)
+        isSpinning: false,   // Móvil (Estado de rotación de la X)
+
         activeCategory: 'cuentas',
         closeTimer: null,
 
@@ -12,40 +13,52 @@ export default function megaMenu() {
         lastScrollY: 0,
 
         init() {
-            // El init se ejecuta automáticamente al cargar
-            console.log("Menú inicializado. Escuchando scroll...");
-            
+            this.lastScrollY = window.scrollY;
             window.addEventListener('scroll', () => {
                 this.handleScroll();
             });
         },
 
+        // --- LÓGICA DE ANIMACIÓN CORREGIDA ---
+        toggleMobileMenu() {
+            if (this.isMobileOpen) {
+                // CERRAR
+                this.isSpinning = false; // Gira de vuelta inmediatamente
+                this.isMobileOpen = false;
+            } else {
+                // ABRIR
+                this.isSpinning = false; // Asegurar estado inicial (0 grados)
+                this.isMobileOpen = true;
+
+                // --- CAMBIO CLAVE AQUÍ ---
+                // Retraso de 400ms. El menú tarda 700ms en abrirse.
+                // La rotación empezará cuando el menú ya esté visible en pantalla.
+                setTimeout(() => {
+                    this.isSpinning = true;
+                }, 800);
+            }
+        },
+
         handleScroll() {
             const currentScrollY = window.scrollY;
-            
-            // Ignorar el "rebote" del scroll en la parte superior (iOS/Mac)
             if (currentScrollY < 0) return;
 
-            // Siempre mostrar si estamos en el tope de la página
             if (currentScrollY < 60) {
                 this.showNavbar = true;
                 this.lastScrollY = currentScrollY;
                 return;
             }
 
-            // Si el menú está abierto, no ocultamos la barra
             if (this.isOpen || this.isMobileOpen) {
                 this.showNavbar = true;
                 return;
             }
 
-            // Detectar dirección: Si el actual es mayor que el anterior, bajamos
             if (currentScrollY > this.lastScrollY) {
-                this.showNavbar = false; // Ocultar (Bajando)
+                this.showNavbar = false;
             } else {
-                this.showNavbar = true;  // Mostrar (Subiendo)
+                this.showNavbar = true;
             }
-
             this.lastScrollY = currentScrollY;
         },
 
@@ -63,7 +76,7 @@ export default function megaMenu() {
             }, 300);
         },
 
-        // Datos de las categorías (Mismo contenido que tenías)
+        // Datos de las categorías (Sin cambios)
         categories: {
             'cuentas': {
                 name: 'Cuentas y Ahorros',

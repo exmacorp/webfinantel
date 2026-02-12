@@ -78,6 +78,9 @@ export default function slider() {
                 this.startAutoplay();
             }
         },
+        get isPaused() {
+            return !this.isPlaying;
+        },
         
         init() {
             this.startAutoplay();

@@ -74,6 +74,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <script type="module" src="./js/app.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -101,7 +102,7 @@
 
         <div class="w-40 h-1.5 bg-gray-100 rounded-full overflow-hidden relative">
             <div
-                class="absolute top-0 left-0 h-full bg-[#FF7800] animate-progress-modern rounded-full shadow-[0_0_10px_rgba(255,120,0,0.6)]">
+                class="absolute top-0 left-0 h-full bg-primary animate-progress-modern rounded-full shadow-[0_0_10px_rgba(255,120,0,0.6)]">
             </div>
         </div>
 
@@ -110,14 +111,17 @@
     <!-- Header -->
     <div include-html="./partials/header.html"></div>
 
-    <main class="pt-[100px] lg:pt-[115px]">
+    <main class="">
 
         <section x-data="slider" @mouseenter="handleMouseEnter()" @mouseleave="handleMouseLeave()"
-            class="relative w-full overflow-hidden h-[500px] md:h-[600px] lg:h-[650px] bg-gray-900 group">
+            class="relative w-full overflow-hidden h-screen md:h-[100vh] bg-gray-900 group z-20">
+
+            <div class="absolute top-0 left-0 h-1.5 bg-accent z-30" style="width: 0%" :key="activeSlide"
+                :class="{'animate-timer': !isPaused}">
+            </div>
 
             <template x-for="slide in slides" :key="slide.id">
                 <div class="absolute inset-0 w-full h-full">
-
                     <img :src="slide.image" alt="Imagen financiera" class="w-full h-full object-cover slide-image"
                         :class="{'active': activeSlide === slide.id}">
 
@@ -126,21 +130,17 @@
                     </div>
 
                     <div x-show="activeSlide === slide.id" x-cloak x-transition:enter="fade-in-up"
-                        class="absolute inset-0 flex items-center z-10">
-
+                        class="absolute inset-0 flex items-center z-10 pb-20">
                         <div class="container mx-auto px-6 md:px-12 lg:px-20">
                             <div class="max-w-3xl">
                                 <span
                                     class="text-white font-bold uppercase tracking-wider text-sm bg-accent px-4 py-1 rounded-full inline-block mb-4"
                                     x-text="slide.tagline"></span>
-
                                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight"
                                     x-html="slide.title"></h1>
-
                                 <p class="text-lg md:text-xl text-gray-200 mb-10" x-text="slide.description"></p>
-
                                 <a :href="slide.ctaLink"
-                                    class="bg-accent text-white px-10 py-4 rounded-xl font-bold shadow-xl text-lg hover:bg-orange-600 transition-smooth transform hover:scale-105 inline-block">
+                                    class="bg-accent text-white px-10 py-4 rounded-xl font-bold shadow-xl text-lg hover:bg-brand-red-dark transition-smooth transform hover:scale-105 inline-block">
                                     <span x-text="slide.ctaText"></span> <i class="fas fa-arrow-right ml-2"></i>
                                 </a>
                             </div>
@@ -150,21 +150,21 @@
             </template>
 
             <button @click="prevSlide()"
-                class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/30 p-4 rounded-full text-white hover:bg-white/50 focus:outline-none z-20 transition-smooth opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg backdrop-blur-sm">
+                class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/30 p-4 rounded-full text-white hover:bg-white/50 focus:outline-none z-30 transition-smooth opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg backdrop-blur-sm">
                 <i class="fas fa-chevron-left text-xl"></i>
             </button>
             <button @click="nextSlide()"
-                class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/30 p-4 rounded-full text-white hover:bg-white/50 focus:outline-none z-20 transition-smooth opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg backdrop-blur-sm">
+                class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/30 p-4 rounded-full text-white hover:bg-white/50 focus:outline-none z-30 transition-smooth opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg backdrop-blur-sm">
                 <i class="fas fa-chevron-right text-xl"></i>
             </button>
 
             <button @click="togglePlayPause()"
-                class="absolute bottom-8 right-8 z-30 flex items-center justify-center w-12 h-12 bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition-smooth border border-white/30 focus:outline-none shadow-lg group-hover:scale-105"
+                class="absolute bottom-40 right-8 z-30 flex items-center justify-center w-12 h-12 bg-white/20 hover:bg-white/40 text-white rounded-full backdrop-blur-md transition-smooth border border-white/30 focus:outline-none shadow-lg group-hover:scale-105"
                 :title="isPlaying ? 'Pausar' : 'Reproducir'">
                 <i class="fas" :class="isPlaying ? 'fa-pause' : 'fa-play'"></i>
             </button>
 
-            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+            <div class="absolute bottom-40 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
                 <template x-for="slide in slides" :key="slide.id">
                     <button @click="goToSlide(slide.id)"
                         class="w-12 h-2 rounded-full focus:outline-none transition-smooth"
@@ -173,9 +173,28 @@
                 </template>
             </div>
 
+            <div class="absolute bottom-0 left-0 w-full z-20 leading-[0]">
+                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave"
+                            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(244, 247, 252, 0.7)" />
+
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(244, 247, 252, 0.5)" />
+
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(244, 247, 252, 0.3)" />
+
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="#F4F7FC" />
+                    </g>
+                </svg>
+            </div>
+
         </section>
 
-        <section class="py-24 relative overflow-hidden bg-light">
+        <section class="py-24 relative overflow-hidden bg-light z-10">
 
             <div class="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
                 <svg viewBox="0 0 1440 320" class="absolute bottom-0 w-full h-auto text-white fill-current">
@@ -197,7 +216,7 @@
                     </p>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-8 lg:gap-10">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
 
                     <div
                         class="group relative h-[450px] rounded-[30px] overflow-hidden shadow-xl cursor-pointer border-b-4 border-accent">
@@ -223,7 +242,7 @@
                     </div>
 
                     <div
-                        class="bg-white rounded-[30px] shadow-2xl p-8 flex flex-col items-center text-center justify-center transform transition-transform duration-500 hover:-translate-y-2 border border-gray-100 relative overflow-hidden">
+                        class="bg-white rounded-[30px] shadow-2xl p-8 flex flex-col items-center text-center justify-center transform transition-transform duration-500 hover:-translate-y-2 border border-gray-100 relative overflow-hidden h-[450px]">
 
                         <div class="absolute top-[-50px] right-[-50px] w-40 h-40 bg-blue-50 rounded-full"></div>
 
@@ -248,7 +267,7 @@
                     </div>
 
                     <div
-                        class="group relative h-[450px] rounded-[30px] overflow-hidden shadow-xl cursor-pointer border-b-4 border-accent">
+                        class="group relative h-[450px] rounded-[30px] overflow-hidden shadow-xl cursor-pointer border-b-4 border-accent md:col-span-2 lg:col-span-1">
                         <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop"
                             alt="Calidad de Servicio"
                             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
@@ -280,77 +299,86 @@
                 </h2>
                 <p class="text-center text-gray-600 mb-12">Soluciones financieras diseñadas para impulsar tus metas.</p>
 
-                <div class="grid md:grid-cols-3 gap-10">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
 
+                    <!-- Tarjeta Ahorros -->
                     <div
-                        class="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-smooth">
-                        <div class="p-8">
+                        class="product-card bg-white rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-smooth border border-gray-100">
+                        <div class="product-card-inner">
                             <div
-                                class="text-sm font-bold text-green-600 bg-green-100 inline-block px-4 py-1 rounded-full mb-4">
+                                class="text-sm font-bold text-[#F4F7FC] bg-accent inline-block px-4 py-1 rounded-full mb-4">
                                 AHORROS</div>
-                            <h3 class="text-2xl font-bold text-primary mb-4">Cuenta Ahorro Digital</h3>
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-piggy-bank text-3xl text-primary mr-3"></i>
+                                <h3 class="text-2xl font-bold text-primary">Cuenta Ahorro Digital</h3>
+                            </div>
                             <p class="text-gray-500 mb-6">Abre tu cuenta 100% online y empieza a ganar intereses desde
                                 el primer día. Sin costo de mantenimiento.</p>
                             <div class="text-3xl font-bold text-accent mb-6">TREA 4.5%</div>
                             <ul class="space-y-2 mb-8 text-gray-700">
-                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i>
                                     Transferencias inmediatas</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i>
                                     Tarjeta de débito VISA</li>
                             </ul>
                             <a href="#"
-                                class="block text-center bg-primary text-white py-3 rounded-lg font-semibold hover:bg-blue-900 transition-smooth">
-                                Ábrela aquí
-                            </a>
+                                class="block text-center bg-primary text-white py-3 rounded-lg font-semibold hover:bg-blue-900 transition-smooth">Ábrela
+                                aquí</a>
                         </div>
                     </div>
 
+                    <!-- Tarjeta Créditos -->
                     <div
-                        class="bg-primary rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-smooth relative border-2 border-accent">
-                        <div
-                            class="absolute top-0 right-0 bg-accent text-white text-sm font-bold px-5 py-2 rounded-bl-xl">
-                            Más Solicitado</div>
-                        <div class="p-8 mt-6">
+                        class="product-card bg-white rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-smooth border border-gray-100 relative">
+                        <!-- <div
+                            class="absolute top-0 right-0 bg-green-600 text-white text-xs font-bold px-4 py-2 rounded-bl-xl z-10 shadow-sm">
+                            Más Solicitado</div> -->
+                        <div class="product-card-inner">
                             <div
-                                class="text-sm font-bold text-white bg-blue-800 inline-block px-4 py-1 rounded-full mb-4">
+                                class="text-sm font-bold text-[#F4F7FC] bg-accent inline-block px-4 py-1 rounded-full mb-4">
                                 CRÉDITOS</div>
-                            <h3 class="text-2xl font-bold text-white mb-4">Crédito de Libre Disponibilidad</h3>
-                            <p class="text-blue-200 mb-6">Solicita tu préstamo con aprobación inmediata y desembolso
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-credit-card text-3xl text-primary mr-3"></i>
+                                <h3 class="text-2xl font-bold text-primary">Crédito de Libre Disponibilidad</h3>
+                            </div>
+                            <p class="text-gray-500 mb-6">Solicita tu préstamo con aprobación inmediata y desembolso
                                 directo a tu cuenta. Tasas exclusivas para socios.</p>
                             <div class="text-3xl font-bold text-accent mb-6">Rápido y Fácil</div>
-                            <ul class="space-y-2 mb-8 text-white">
+                            <ul class="space-y-2 mb-8 text-gray-700">
                                 <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i>
                                     Evaluación 100% online</li>
                                 <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i>
                                     Montos hasta S/ 50,000</li>
                             </ul>
                             <a href="simulador"
-                                class="block text-center bg-accent text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-smooth">
-                                Solicítalo ahora
-                            </a>
+                                class="block text-center bg-primary text-white py-3 rounded-lg font-semibold hover:bg-blue-900 transition-smooth">Solicítalo
+                                ahora</a>
                         </div>
                     </div>
 
+                    <!-- Tarjeta Inversión -->
                     <div
-                        class="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-smooth">
-                        <div class="p-8">
+                        class="product-card bg-white rounded-2xl shadow-xl overflow-hidden transform hover:-translate-y-2 transition-smooth border border-gray-100">
+                        <div class="product-card-inner">
                             <div
-                                class="text-sm font-bold text-purple-600 bg-purple-100 inline-block px-4 py-1 rounded-full mb-4">
+                                class="text-sm font-bold text-[#F4F7FC] bg-accent inline-block px-4 py-1 rounded-full mb-4">
                                 INVERSIÓN</div>
-                            <h3 class="text-2xl font-bold text-primary mb-4">Depósito a Plazo Fijo</h3>
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-chart-line text-3xl text-primary mr-3"></i>
+                                <h3 class="text-2xl font-bold text-primary">Depósito a Plazo Fijo</h3>
+                            </div>
                             <p class="text-gray-500 mb-6">Asegura la rentabilidad de tu dinero con nuestras tasas
                                 líderes en el mercado. Elige el plazo que más te convenga.</p>
                             <div class="text-3xl font-bold text-accent mb-6">TREA hasta 7.0%</div>
                             <ul class="space-y-2 mb-8 text-gray-700">
-                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i>
                                     Plazos desde 90 días</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i>
                                     Respaldo garantizado</li>
                             </ul>
                             <a href="#"
-                                class="block text-center bg-primary text-white py-3 rounded-lg font-semibold hover:bg-blue-900 transition-smooth">
-                                Calcula tu ganancia
-                            </a>
+                                class="block text-center bg-primary text-white py-3 rounded-lg font-semibold hover:bg-blue-900 transition-smooth">Calcula
+                                tu ganancia</a>
                         </div>
                     </div>
 
@@ -509,7 +537,7 @@
                             <div class="bg-blue-900 h-32 relative flex items-center p-6 md:p-8 overflow-hidden">
                                 <div class="relative z-10">
                                     <span
-                                        class="text-accent font-bold uppercase tracking-wider text-xs block mb-1">Agencia
+                                        class="text-white font-bold uppercase tracking-wider text-xs block mb-1">Agencia
                                         Principal</span>
                                     <h3 class="text-3xl font-extrabold text-white">Lima</h3>
                                 </div>
@@ -571,7 +599,7 @@
                             <div class="bg-blue-900 h-32 relative flex items-center p-6 md:p-8 overflow-hidden">
                                 <div class="relative z-10">
                                     <span
-                                        class="text-accent font-bold uppercase tracking-wider text-xs block mb-1">Agencia</span>
+                                        class="text-white font-bold uppercase tracking-wider text-xs block mb-1">Agencia</span>
                                     <h3 class="text-3xl font-extrabold text-white">Miraflores</h3>
                                 </div>
                                 <div class="absolute right-0 bottom-0 opacity-20 transform translate-x-4 translate-y-4">
@@ -806,7 +834,7 @@
                     </button>
 
                     <button @click="acceptCookies()"
-                        class="text-center text-sm font-bold text-white bg-accent hover:bg-orange-600 transition-smooth py-3 px-8 rounded-lg shadow-md transform hover:scale-105 w-full sm:w-auto">
+                        class="text-center text-sm font-bold text-white bg-accent hover:bg-[#A30013] transition-colors duration-200 ease-out py-3 px-8 rounded-lg shadow-md transform transition-transform duration-200 ease-out hover:scale-105 w-full sm:w-auto">
                         Aceptar Todo
                     </button>
                 </div>

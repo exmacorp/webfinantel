@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - Cooperativa de Ahorro y Crédito FINANTEL LTDA.</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Conoce más sobre Finantel, nuestra historia, misión, visión y los valores que nos guían para impulsar el progreso de nuestros socios.">
+    <meta name="keywords" content="nosotros, finantel, cooperativa, historia, misión, visión, valores, equipo">
+    <meta name="author" content="Finantel">
+    <link rel="canonical" href="https://www.finantel.com.pe/nosotros.html">
+    <meta name="robots" content="index, follow">
+
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Scripts -->
+    <script type="module" src="./js/app.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body x-data="cookieConsent">
+
+    <!-- loader -->
+    <div x-data="{ 
+            isLoading: true, 
+            init() { 
+                window.addEventListener('finantel-loaded', () => { 
+                    setTimeout(() => { this.isLoading = false }, 1000) 
+                }) 
+            } 
+        }" x-show="isLoading" x-transition:leave="transition ease-in-out duration-700"
+        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+        class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white" style="display: flex;">
+
+        <div class="relative mb-8">
+            <img src="./assets/img/logo_fondo blanco.png" alt="Logo Finantel"
+                class="w-32 h-32 md:w-48 md:h-48 object-contain animate-breathe drop-shadow-xl">
+        </div>
+
+        <div class="w-40 h-1.5 bg-gray-100 rounded-full overflow-hidden relative">
+            <div
+                class="absolute top-0 left-0 h-full bg-[#FF7800] animate-progress-modern rounded-full shadow-[0_0_10px_rgba(255,120,0,0.6)]">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Header -->
+    <div include-html="./partials/header.html"></div>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden bg-primary">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2000&auto=format&fit=crop"
+                    alt="Equipo Finantel" class="w-full h-full object-cover opacity-30">
+                <div class="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-primary"></div>
+            </div>
+
+            <div class="container mx-auto px-4 md:px-6 relative z-10 text-center">
+                <span
+                    class="inline-block py-1 px-4 rounded-full bg-accent/20 text-white font-bold text-sm tracking-widest mb-4 backdrop-blur-sm border border-accent/20">
+                    NUESTRA ESENCIA
+                </span>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+                    Sobre Nosotros
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto font-light">
+                    Construyendo futuro y bienestar para nuestros socios desde hace más de 30 años.
+                </p>
+            </div>
+
+            <!-- Wave Separator -->
+            <div class="absolute bottom-0 left-0 w-full leading-none overflow-hidden rotate-180">
+                <svg class="relative block w-[calc(100%+1.3px)] h-[60px] text-white fill-current" data-name="Layer 1"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path
+                        d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z">
+                    </path>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Brief History / Intro Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                    <div class="w-full lg:w-1/2 relative">
+                        <div class="relative rounded-[30px] overflow-hidden shadow-2xl z-10">
+                            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop"
+                                alt="Oficinas Finantel"
+                                class="w-full h-auto object-cover transform transition-transform duration-700 hover:scale-105">
+                        </div>
+                        <!-- Decoration -->
+                        <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-accent/10 rounded-full z-0 blur-xl"></div>
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full z-0 blur-xl"></div>
+
+                        <div
+                            class="hidden md:block absolute -right-6 bottom-12 bg-white p-6 rounded-2xl shadow-xl z-20 max-w-xs border border-gray-100 animate-float">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+                                    <i class="fas fa-check-circle text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 font-semibold">Experiencia</p>
+                                    <p class="text-lg font-bold text-primary">+30 Años</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-1/2">
+                        <h2 class="text-accent font-bold tracking-wider uppercase text-sm mb-3">Quiénes Somos</h2>
+                        <h3 class="text-3xl md:text-4xl font-extrabold text-primary mb-6 leading-tight">
+                            Tu aliado financiero de confianza
+                        </h3>
+                        <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+                            Finantel es una Cooperativa de Ahorro y Crédito comprometida con el desarrollo de sus
+                            socios. Desde nuestra fundación, nos hemos dedicado a brindar soluciones financieras
+                            accesibles, fomentando el ahorro y otorgando créditos que impulsan sueños y proyectos.
+                        </p>
+                        <p class="text-gray-600 mb-8 leading-relaxed">
+                            Nos regimos bajo valores cooperativos sólidos, priorizando siempre el bienestar de nuestra
+                            comunidad y operando con total transparencia y responsabilidad bajo la supervisión de la
+                            SBS.
+                        </p>
+
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#"
+                                class="px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-blue-900 transition-smooth shadow-lg hover:shadow-xl inline-flex items-center">
+                                Conoce nuestros productos <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission & Vision Section -->
+        <section class="py-20 bg-gray-50 relative overflow-hidden">
+            <!-- Background Elements -->
+            <div class="absolute top-0 right-0 opacity-5 w-64 h-64 transform translate-x-1/3 -translate-y-1/3">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#002A8D"
+                        d="M44.7,-76.4C58.9,-69.2,71.8,-59.1,81.6,-46.6C91.4,-34.1,98.2,-19.2,95.8,-5.8C93.4,7.6,81.8,19.5,70.6,30.3C59.4,41.1,48.6,50.9,36.7,58.8C24.8,66.7,11.8,72.7,-0.7,73.9C-13.2,75.1,-25.9,71.5,-37.7,64.2C-49.5,56.9,-60.4,45.9,-69.1,32.9C-77.8,19.9,-84.3,4.9,-81.7,-8.7C-79.1,-22.3,-67.4,-34.5,-55.5,-42.6C-43.6,-50.7,-31.5,-54.7,-19.4,-63.9C-7.4,-73.1,4.6,-87.5,17.2,-87.1C29.8,-86.7,46.1,-71.5,44.7,-76.4Z"
+                        transform="translate(100 100)" />
+                </svg>
+            </div>
+
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-primary mb-6">Nuestra Razón de Ser</h2>
+                    <p class="text-lg text-gray-600">
+                        Cada paso que damos está guiado por un propósito claro y una visión de futuro ambiciosa.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                    <!-- Mission Card -->
+                    <div
+                        class="bg-white rounded-[30px] p-8 md:p-12 shadow-xl border-t-4 border-accent hover:transform hover:-translate-y-2 transition-smooth">
+                        <div
+                            class="w-20 h-20 bg-orange-50 rounded-2xl flex items-center justify-center mb-8 rotate-3 transition-transform hover:rotate-6">
+                            <i class="fas fa-rocket text-4xl text-accent"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary mb-4">Misión</h3>
+                        <p class="text-gray-600 leading-relaxed text-lg">
+                            Somos una organización sin fines de lucro, nuestro principal objetivo es brindar la ayuda
+                            necesaria a nuestros socios y a sus familias contribuyendo así al progreso económico y
+                            social de nuestra comunidad.
+                        </p>
+                    </div>
+
+                    <!-- Vision Card -->
+                    <div
+                        class="bg-white rounded-[30px] p-8 md:p-12 shadow-xl border-t-4 border-primary hover:transform hover:-translate-y-2 transition-smooth">
+                        <div
+                            class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mb-8 -rotate-3 transition-transform hover:-rotate-6">
+                            <i class="fas fa-eye text-4xl text-primary"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary mb-4">Visión</h3>
+                        <p class="text-gray-600 leading-relaxed text-lg">
+                            Ser la cooperativa líder reconocida por su solidez financiera, excelencia en el servicio y
+                            compromiso constante con el bienestar y crecimiento de nuestros socios a nivel nacional.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <section class="py-24 bg-primary text-white relative overflow-hidden">
+            <!-- Wallpaper Pattern -->
+            <div class="absolute inset-0 opacity-5"
+                style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
+            </div>
+
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div class="text-center mb-16">
+                    <span
+                        class="inline-block py-1 px-4 rounded-full bg-white/10 text-white font-bold text-sm tracking-widest mb-4 backdrop-blur-sm border border-white/20">
+                        CULTURA FINANTEL
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold mb-6">Nuestros Valores</h2>
+                    <p class="text-blue-200 max-w-2xl mx-auto text-lg">
+                        Los pilares que sostienen nuestro compromiso contigo.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+
+                    <div
+                        class="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-smooth hover:scale-105">
+                        <div
+                            class="w-16 h-16 mx-auto bg-accent rounded-full flex items-center justify-center mb-6 shadow-lg shadow-accent/40 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-hand-holding-heart text-2xl text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Honestidad</h4>
+                        <p class="text-blue-100 text-sm leading-relaxed">
+                            Actuamos con rectitud y transparencia en todas nuestras operaciones y relaciones.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-smooth hover:scale-105">
+                        <div
+                            class="w-16 h-16 mx-auto bg-green-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-green-500/40 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-users text-2xl text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Compromiso</h4>
+                        <p class="text-blue-100 text-sm leading-relaxed">
+                            Estamos dedicados a satisfacer las necesidades de nuestros socios con lealtad.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-smooth hover:scale-105">
+                        <div
+                            class="w-16 h-16 mx-auto bg-blue-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-blue-500/40 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-shield-alt text-2xl text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Integridad</h4>
+                        <p class="text-blue-100 text-sm leading-relaxed">
+                            Mantenemos la coherencia entre lo que decimos y hacemos, generando confianza absoluta.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-smooth hover:scale-105">
+                        <div
+                            class="w-16 h-16 mx-auto bg-yellow-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-yellow-500/40 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-star text-2xl text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Excelencia</h4>
+                        <p class="text-blue-100 text-sm leading-relaxed">
+                            Buscamos la mejora continua en nuestros servicios para superar las expectativas.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-smooth hover:scale-105">
+                        <div
+                            class="w-16 h-16 mx-auto bg-purple-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-purple-500/40 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-hands-helping text-2xl text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Solidaridad</h4>
+                        <p class="text-blue-100 text-sm leading-relaxed">
+                            Trabajamos unidos (socios y colaboradores) por el bien común y el apoyo mutuo.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-smooth hover:scale-105">
+                        <div
+                            class="w-16 h-16 mx-auto bg-red-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-red-500/40 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-lightbulb text-2xl text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Innovación</h4>
+                        <p class="text-blue-100 text-sm leading-relaxed">
+                            Nos adaptamos a los cambios para ofrecer soluciones modernas y eficientes.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <div
+                    class="bg-gradient-to-r from-[#002A8D] to-[#0044cc] rounded-[40px] p-8 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
+
+                    <!-- Decorative Circles -->
+                    <div
+                        class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2">
+                    </div>
+
+                    <div class="relative z-10 max-w-3xl mx-auto">
+                        <h2 class="text-3xl md:text-5xl font-extrabold mb-6">¿Listo para formar parte de nuestra
+                            familia?</h2>
+                        <p class="text-lg text-blue-100 mb-10">
+                            Únete hoy a Finantel y comienza a disfrutar de todos los beneficios y el respaldo que
+                            tenemos para ti.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="#"
+                                class="px-8 py-4 bg-white text-primary rounded-xl font-bold text-lg hover:bg-gray-100 transition-smooth shadow-lg hover:scale-105">
+                                Hazte Socio
+                            </a>
+                            <a href="#"
+                                class="px-8 py-4 bg-accent text-white rounded-xl font-bold text-lg hover:bg-brand-red-dark transition-smooth shadow-lg hover:scale-105">
+                                Contáctanos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <div include-html="./partials/footer.html"></div>
+
+    <div x-show="isVisible" x-cloak x-transition:enter="transition ease-out duration-500"
+        x-transition:enter-start="opacity-0 translate-y-10" x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 translate-y-10"
+        class="fixed bottom-28 right-8 z-40 flex flex-col items-end space-y-4" x-data="{ 
+            isVisible: false, 
+            init() { 
+                window.addEventListener('scroll', () => { 
+                    this.isVisible = window.scrollY > 300; 
+                }); 
+            },
+            scrollToTop() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }">
+
+        <button @click="scrollToTop()"
+            class="w-12 h-12 bg-primary text-white rounded-full shadow-lg hover:bg-blue-800 transition-colors flex items-center justify-center focus:outline-none ring-2 ring-white/50">
+            <i class="fas fa-chevron-up"></i>
+        </button>
+    </div>
+
+    <div include-html="./partials/whatsapp.html"></div>
+
+</body>
+
+</html>
