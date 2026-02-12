@@ -1,4 +1,11 @@
-<div x-data="loader" x-show="isLoading" x-transition:leave="transition ease-in-out duration-700"
+<div x-data="{ 
+            isLoading: true, 
+            init() { 
+                window.addEventListener('finantel-loaded', () => { 
+                    setTimeout(() => { this.isLoading = false }, 2000) 
+                }) 
+            } 
+        }" x-show="isLoading" x-transition:leave="transition ease-in-out duration-700"
     x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
     class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white" style="display: flex;">
 
